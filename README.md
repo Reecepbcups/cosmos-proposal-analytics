@@ -1,3 +1,1 @@
-# Rama Logic
-
-get average wallet size for Prop 82 votes.
+# cosmos-prop-82-analytics
