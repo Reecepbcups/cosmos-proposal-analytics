@@ -76,24 +76,33 @@ for i, data in enumerate(votes.get('votes')):
 
 # avg_staking_balance & average bank balance (in uatom)
 
-staking_sums = 0
-bank_sums = 0
+staking_sums = []
+bank_sums = []
 total_accounts = 0
+
+median_staking_amount = 0
 for voter in votes_dict.keys():
     total_accounts += 1
 
     if voter in staking:
-        staking_sums += staking[voter]
+      # staking_sums += staking[voter]
+      staking_sums.append(staking[voter])
     if voter in bank:
-        bank_sums += bank[voter]
+      # bank_sums += bank[voter]    
+      bank_sums.append(bank[voter] / 1_000_000) # in atom
+    
 
-
-bank_sums = bank_sums / 1_000_000 # in atom
 
 print("AVERAGES FOR PROPOSAL", PROPOSAL)
 print('total_accounts', total_accounts)
-print('total staking_sums: atom', f"{staking_sums:,}")
-print('total bank_sums', f"{bank_sums:,}")
+print('total staking_sums: atom', f"{sum(staking_sums):,}")
+print('total bank_sums', f"{sum(bank_sums):,}")
 
-print('avg_staking_amt', f"{staking_sums / total_accounts:,}")
-print('average bank balance', f"{bank_sums / total_accounts:,}")
+print('avg_staking_amt', f"{sum(staking_sums) / total_accounts:,}")
+print('average bank balance', f"{sum(bank_sums) / total_accounts:,}")
+
+# median
+staking_sums.sort()
+bank_sums.sort()
+print('median staking amount', f"{staking_sums[len(staking_sums) // 2]:,}")
+print('median bank balance', f"{bank_sums[len(bank_sums) // 2]:,}")
